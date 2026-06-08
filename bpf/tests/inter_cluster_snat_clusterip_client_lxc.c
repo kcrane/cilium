@@ -208,7 +208,7 @@ int lxc_to_overlay_syn_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port hasn't been NATed to backend port");
 
-	if (l4->check != bpf_htons(0xd64b))
+	if (l4->check != bpf_htons(0x35ec))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Check service conntrack state is in the default CT */
@@ -315,7 +315,7 @@ int overlay_to_lxc_synack_check(struct __ctx_buff *ctx)
 	if (l4->dest != CLIENT_PORT)
 		test_fatal("dst port is not client port");
 
-	if (l4->check != bpf_htons(0x6325))
+	if (l4->check != bpf_htons(0xc2c5))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Make sure we hit the conntrack entry */
@@ -405,7 +405,7 @@ int lxc_to_overlay_ack_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port hasn't been NATed to backend port");
 
-	if (l4->check != bpf_htons(0xd63d))
+	if (l4->check != bpf_htons(0x35de))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Make sure we hit the conntrack entry */

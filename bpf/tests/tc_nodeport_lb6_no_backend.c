@@ -132,7 +132,7 @@ validate_icmp_reply(const struct __ctx_buff *ctx, __u32 retval)
 	 * context with the runner option and importing the packet into
 	 * wireshark
 	 */
-	assert(l4->icmp6_cksum == bpf_htons(0x9e14));
+	assert(l4->icmp6_cksum == bpf_htons(0x9b17));
 
 	struct ratelimit_key key = {
 		.usage = RATELIMIT_USAGE_ICMPV6,

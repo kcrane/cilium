@@ -75,7 +75,7 @@ int egressgw_redirect_pktgen(struct __ctx_buff *ctx)
 SETUP("tc", "tc_egressgw_redirect_from_overlay")
 int egressgw_redirect_setup(struct __ctx_buff *ctx)
 {
-	add_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & 0xffffff, 24, GATEWAY_NODE_IP,
+	add_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & bpf_htonl(0xFFFFFF00), 24, GATEWAY_NODE_IP,
 				  EGRESS_IP);
 
 	return overlay_receive_packet(ctx);
@@ -88,7 +88,7 @@ int egressgw_redirect_check(const struct __ctx_buff *ctx)
 			.status_code = TC_ACT_REDIRECT,
 	});
 
-	del_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & 0xffffff, 24);
+	del_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & bpf_htonl(0xFFFFFF00), 24);
 
 	return ret;
 }
@@ -107,7 +107,7 @@ int egressgw_skip_excluded_cidr_redirect_pktgen(struct __ctx_buff *ctx)
 SETUP("tc", "tc_egressgw_skip_excluded_cidr_redirect_from_overlay")
 int egressgw_skip_excluded_cidr_redirect_setup(struct __ctx_buff *ctx)
 {
-	add_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & 0xffffff, 24, GATEWAY_NODE_IP,
+	add_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & bpf_htonl(0xFFFFFF00), 24, GATEWAY_NODE_IP,
 				  EGRESS_IP);
 	add_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP, 32, EGRESS_GATEWAY_EXCLUDED_CIDR,
 				  EGRESS_IP);
@@ -122,7 +122,7 @@ int egressgw_skip_excluded_cidr_redirect_check(const struct __ctx_buff *ctx)
 			.status_code = TC_ACT_OK,
 	});
 
-	del_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & 0xffffff, 24);
+	del_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP & bpf_htonl(0xFFFFFF00), 24);
 	del_egressgw_policy_entry(CLIENT_IP, EXTERNAL_SVC_IP, 32);
 
 	return ret;

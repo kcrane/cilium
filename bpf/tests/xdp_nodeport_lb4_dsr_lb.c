@@ -148,7 +148,7 @@ int nodeport_dsr_fwd_check(__maybe_unused const struct __ctx_buff *ctx)
 	if (l3->daddr != BACKEND_IP)
 		test_fatal("dst IP hasn't been NATed to remote backend IP");
 
-	if (l3->check != bpf_htons(0x434a))
+	if (l3->check != bpf_htons(0xef9d))
 		test_fatal("L3 checksum is invalid: %x", bpf_htons(l3->check));
 
 	if (opt->type != DSR_IPV4_OPT_TYPE)
@@ -166,7 +166,7 @@ int nodeport_dsr_fwd_check(__maybe_unused const struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port hasn't been NATed to backend port");
 
-	if (l4->check != bpf_htons(0xd7cf))
+	if (l4->check != bpf_htons(0x3770))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	test_finish();

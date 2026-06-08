@@ -181,7 +181,7 @@ int nodeport_dsr_ipip6_fwd_check(__maybe_unused const struct __ctx_buff *ctx)
 		test_fatal("innerSrcPort has changed");
 	if (l4->dest != FRONTEND_PORT)
 		test_fatal("innerDstPort has changed");
-	if (l4->check != bpf_htons(0x2dbc))
+	if (l4->check != bpf_htons(0x8d5c))
 		test_fatal("inner L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	test_finish();

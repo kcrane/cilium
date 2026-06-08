@@ -361,7 +361,7 @@ int ipv4_decrypted_ipsec_from_network_check(__maybe_unused const struct __ctx_bu
 	if (l4->dest != tcp_svc_one)
 		test_fatal("dst TCP port was changed");
 
-	if (l4->check != bpf_htons(0x589c))
+	if (l4->check != bpf_htons(0xb83c))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	payload = (void *)l4 + sizeof(struct tcphdr);
@@ -468,7 +468,7 @@ int ipv6_decrypted_ipsec_from_network_check(__maybe_unused const struct __ctx_bu
 	if (l4->dest != tcp_svc_one)
 		test_fatal("dst TCP port was changed");
 
-	if (l4->check != bpf_htons(0xdfe3))
+	if (l4->check != bpf_htons(0x3f84))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	payload = (void *)l4 + sizeof(struct tcphdr);

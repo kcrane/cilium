@@ -200,7 +200,7 @@ int overlay_to_lxc_syn_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x1df4))
+	if (l4->check != bpf_htons(0x7d94))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Check ingress conntrack state is in the default CT */
@@ -296,7 +296,7 @@ int lxc_to_overlay_ack_check(struct __ctx_buff *ctx)
 	if (l4->dest != CLIENT_INTER_CLUSTER_SNAT_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x1de4))
+	if (l4->check != bpf_htons(0x7d84))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Make sure we hit the conntrack entry */
@@ -389,7 +389,7 @@ int overlay_to_lxc_ack_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x1de6))
+	if (l4->check != bpf_htons(0x7d86))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	/* Make sure we hit the conntrack entry */

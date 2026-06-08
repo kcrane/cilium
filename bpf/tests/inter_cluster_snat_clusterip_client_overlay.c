@@ -236,7 +236,7 @@ int to_overlay_syn_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x777e))
+	if (l4->check != bpf_htons(0xd71e))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	tuple.daddr = BACKEND_IP;
@@ -338,7 +338,7 @@ int from_overlay_synack_check(struct __ctx_buff *ctx)
 	if (l4->dest != CLIENT_PORT)
 		test_fatal("dst port hasn't been RevSNATed to client port");
 
-	if (l4->check != bpf_htons(0x2fc5))
+	if (l4->check != bpf_htons(0x8f65))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	meta = ctx_load_meta(ctx, CB_DELIVERY_REDIRECT);
@@ -435,7 +435,7 @@ int to_overlay_ack_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x7770))
+	if (l4->check != bpf_htons(0xd710))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	test_finish();

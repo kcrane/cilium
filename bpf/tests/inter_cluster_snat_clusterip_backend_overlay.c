@@ -240,7 +240,7 @@ int from_overlay_syn_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x777f))
+	if (l4->check != bpf_htons(0xd71f))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	meta = ctx_load_meta(ctx, CB_DELIVERY_REDIRECT);
@@ -333,7 +333,7 @@ int to_overlay_synack_check(struct __ctx_buff *ctx)
 	if (l4->dest != CLIENT_INTER_CLUSTER_SNAT_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x776f))
+	if (l4->check != bpf_htons(0xd70f))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	test_finish();
@@ -407,7 +407,7 @@ int from_overlay_ack_check(struct __ctx_buff *ctx)
 	if (l4->dest != BACKEND_PORT)
 		test_fatal("dst port has changed");
 
-	if (l4->check != bpf_htons(0x7771))
+	if (l4->check != bpf_htons(0xd711))
 		test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 
 	meta = ctx_load_meta(ctx, CB_DELIVERY_REDIRECT);

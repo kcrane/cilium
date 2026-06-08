@@ -363,18 +363,18 @@ l3_check:
 
 	if (is_ipv4)
 		if (is_host) {
-			if (l4->check != bpf_htons(0xb1ed))
+			if (l4->check != bpf_htons(0x118e))
 				test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 		} else {
-			if (l4->check != bpf_htons(0x589c))
+			if (l4->check != bpf_htons(0xb83c))
 				test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 		}
 	else
 		if (is_host) {
-			if (l4->check != bpf_htons(0xdfe1))
+			if (l4->check != bpf_htons(0x3f82))
 				test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 		} else {
-			if (l4->check != bpf_htons(0xdfe3))
+			if (l4->check != bpf_htons(0x3f84))
 				test_fatal("L4 checksum is invalid: %x", bpf_htons(l4->check));
 		}
 

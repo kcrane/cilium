@@ -48,7 +48,7 @@ volatile const __u8 mac_host[] = host_mac_addr;
  *  having to come up with custom ips.
  */
 
-#define IPV4(a, b, c, d) __bpf_htonl(((a) << 24) + ((b) << 16) + ((c) << 8) + (d))
+#define IPV4(a, b, c, d) __bpf_htonl(((__u32)(a) << 24) + ((__u32)(b) << 16) + ((__u32)(c) << 8) + (__u32)(d))
 
 /* IPv4 addresses for hosts, external to the cluster */
 #define v4_ext_one	IPV4(110, 0, 11, 1)
@@ -453,8 +453,8 @@ struct tcphdr *pktgen__push_default_tcphdr(struct pktgen *builder)
 		return 0;
 
 	hdr->syn = 1;
-	hdr->seq = 123456;
-	hdr->window = 65535;
+	hdr->seq = bpf_htonl(123456);
+	hdr->window = bpf_htons(65535);
 
 	/* In most cases the doff is 5, so a good default if we can't
 	 * calc the actual offset
@@ -503,8 +503,8 @@ struct ip_esp_hdr *pktgen__push_default_esphdr(struct pktgen *builder)
 	if (!hdr)
 		return 0;
 
-	hdr->spi = 1;
-	hdr->seq_no = 10000;
+	hdr->spi = bpf_htonl(1);
+	hdr->seq_no = bpf_htonl(10000);
 
 	return hdr;
 }
@@ -1135,7 +1135,7 @@ pktgen__ip_csum(const struct pktgen *builder, int i)
 
 		csum = csum_diff(NULL, 0, &ipv4_layer->saddr, sizeof(__be32), 0);
 		csum = csum_diff(NULL, 0, &ipv4_layer->daddr, sizeof(__be32), csum);
-		tmp = (__u16)ipv4_layer->protocol << 8;
+		tmp = bpf_htons((__u16)ipv4_layer->protocol);
 		csum = csum_diff(NULL, 0, &tmp, sizeof(__u32), csum);
 		return csum;
 	case PKT_LAYER_IPV6:
@@ -1150,7 +1150,7 @@ pktgen__ip_csum(const struct pktgen *builder, int i)
 
 		csum = csum_diff(NULL, 0, &ipv6_layer->saddr, sizeof(struct in6_addr), 0);
 		csum = csum_diff(NULL, 0, &ipv6_layer->daddr, sizeof(struct in6_addr), csum);
-		tmp = (__u16)ipv6_layer->nexthdr << 8;
+		tmp = bpf_htons((__u16)ipv6_layer->nexthdr);
 		csum = csum_diff(NULL, 0, &tmp, sizeof(__u32), csum);
 		return csum;
 	default:
